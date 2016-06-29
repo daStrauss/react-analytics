@@ -36,7 +36,8 @@
     'page',
     'once',
     'off',
-    'on'
+    'on',
+    'initialize'
   ];
 
   // Define a factory to create stubs. These are placeholders
@@ -60,22 +61,22 @@
 
   // Define a method to load Analytics.js from our CDN,
   // and that will be sure to only ever load it once.
-  analytics.load = function(key){
+  analytics.load = function(){
     // Create an async script element based on your key.
     var script = document.createElement('script');
     script.type = 'text/javascript';
     script.async = true;
 
-    // script.src = 'http://localhost:3000/analytics.js';
+    script.src = 'http://localhost:3000/new-analytics.js';
     // script.src = ('https:' === document.location.protocol
     //   ? 'https://' : 'http://')
     //   + 'localhost:3000/analytics.min.js';
 
     // var key = "P5MNJtjWAX2lhA3lb420tWKxNWp75z0H"
-    script.src = ('https:' === document.location.protocol
-        ? 'https://' : 'http://')
-        + 'cdn.segment.com/analytics.js/v1/'
-        + key + '/analytics.min.js';
+    // script.src = ('https:' === document.location.protocol
+    //     ? 'https://' : 'http://')
+    //     + 'cdn.segment.com/analytics.js/v1/'
+    //     + key + '/analytics.js';
     console.log(script.src);
     // Insert our script next to the first script element.
     var first = document.getElementsByTagName('script')[0];
@@ -87,7 +88,13 @@
 
   // Load Analytics.js with your key, which will automatically
   // load the tools you've enabled for your account. Boosh!
-  analytics.load("P5MNJtjWAX2lhA3lb420tWKxNWp75z0H");
+  analytics.load();
+
+  // try to initialize thte things here
+  analytics.initialize({"custom_url":{"apiKey":"oh-right", "eventUrl":"localhost:5400"}}, {
+    initialPageview: '3.0.1' === 0,
+    plan: {"track":{}}
+  });
 
   // Make the first page call to load the integrations. If
   // you'd like to manually name or tag the page, edit or
